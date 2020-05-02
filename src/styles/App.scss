@@ -1,0 +1,12 @@
+@import "elements/varibles";
+@import "elements/login";
+@import "elements/mostlylisten";
+
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body, html {
+  overflow-x: hidden;
+}

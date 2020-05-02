@@ -2,111 +2,124 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Spotify from "spotify-web-api-js"
 
-
-import "./styles.css";
+import "./styles/App.scss";
 import {
-} from "./services/PokeApiClient";
+  spotifyApi, token
+} from "./services/ApiClient";
 
-import {
-} from "./Model";
 import userEvent from "@testing-library/user-event";
+import {CurrentPlaying} from "./components/CurrentPlaying";
+import {Login} from "./components/Login";
+import {TopArtists} from "./components/TopArtists";
 
-const spotifyApi = new Spotify();
+export interface NowPlaying {
+  name: string,
+  image: string
+}
+
+
 
 function App() {
-
-  const params = getHashParams()
-    const token = params.access_token ;
-
-  if (token) {
-    spotifyApi.setAccessToken(token);
-  }
-  // const [params, setParams] = useState(getHashParams())
-  const [logedIn, setLogedIn] = useState(token ? true : false);
-  const [nowPlaying, setNowPlaying] = useState <any >({
+  const [logedIn, setLogedIn] = useState<Boolean>(token ? true : false);
+  const [user, setUser] = useState("damn")
+  const [nowPlaying, setNowPlaying] = useState <NowPlaying>({
     name : "Not Checked",
     image: ""
   })
-
-
-
-  //
-  if (params.access_token) {
-  spotifyApi.setAccessToken(params.access_token)
-  }
-
+  const [currentPage, setCurrentPage] = useState({type: "LOGIN"})
 
   function getNowPlaying() {
   spotifyApi.getMyCurrentPlaybackState().then((response) => {
-    console.log("response " + response)
-    // setNowPlaying ({
-    //   name: response.item.name,
-    //   image: response.item.album.images[0].url
-    // })
+    if (response.item === null) {
+      return
+    } else setNowPlaying ({
+      name: response.item.name,
+      image: response.item.album.images[0].url
+    })
+
   }).catch((error) => {
-    alert(error)
+    alert("Is it the sound of silence? Turn on the music! ")
+    })
+  }
+  function getUser ()  {
+    spotifyApi.getMe().then((response) => {
+      if (response.display_name === undefined || response.followers === undefined || response.followers.total === undefined){
+        return
+      }
+      setUser(response.display_name)
     })
   }
 
-  console.log(params)
-  console.log("loged in status" + token)
-  console.log("params acces toke " +params.access_token)
-  console.log("api" + spotifyApi)
-  console.log("api.setAcces(-)" +spotifyApi.setAccessToken("da"))
-  console.log("api.setAcces(+)"+ spotifyApi.setAccessToken(params.access_token))
 
 
-  function getHashParams() {
-    var hashParams : any = {};
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-        q = window.location.hash.substring(1);
-    while ( e = r.exec(q)) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
+  // getUser()
+  // getTopArtist()
+
+  function changePage() : JSX.Element{
+  if(logedIn){
+    getUser()
+    return (<TopArtists userName={user} />)
+  } else {
+    return <Login  />
   }
+  }
+
+
+  // function mainView(): JSX.Element {
+  //   switch (currentPage.type) {
+  //     case "LOGIN":
+  //       return <Login changePage={setCurrentPage} />;
+  //     case "REGISTER":
+  //       return <Register changePage={setCurrentPage} />;
+  //     case "BOARDS":
+  //       return <Board user={currentPage.user} />;
+  //   }
+  // }
   return(
 <div>
+  {changePage()}
+
+      {/*<div className="background w-100">*/}
+      {/*  <h1 className="text-5xl text-white tracking-wide text-center mt-10"> Find out what your soul jumps into </h1>*/}
+      {/*  <a href="http://localhost:8888">*/}
+      {/*    <button*/}
+      {/*        className={ logedIn ? "opacity-0" : "log-in bg-transparent hover:bg-blue-500 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}*/}
+      {/*  >*/}
+      {/*      Get your spotify data*/}
+      {/*    </button>*/}
+      {/*  </a>*/}
+
+      {/*    <h3 className="text-white text-center font-black"> Hello {userInfo.name} </h3>*/}
+
+      {/*    <CurrentPlaying*/}
+      {/*        getNowPlaying={getNowPlaying}*/}
+      {/*        nowPlayingName={nowPlaying.name}*/}
+      {/*        nowPlayingImage={nowPlaying.image}*/}
+      {/*    />*/}
 
 
-      <div className="background w-100">
-        <h1 className="text-5xl text-white font-black tracking-wide text-center mt-40"> Find out what your soul jumps into </h1>
-        <a href="http://localhost:8888">
-          <button
-              className="log-in bg-transparent hover:bg-blue-500 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-        >
-            Get your spotify data
-          </button>
-        </a>
-        <div> NOW PLAYING {nowPlaying.name}</div>
-        <img src={nowPlaying.image}/>
-        <button
-            className="get-now-playing bg-transparent hover:bg-blue-500 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-            onClick={() =>getNowPlaying()}>
-        Check Now Playing
-        </button>
 
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*  <span></span>*/}
+      {/*</div>*/}
 </div>
   );
 }
