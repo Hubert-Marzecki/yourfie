@@ -21,7 +21,7 @@ export interface NowPlaying {
 
 function App() {
   const [logedIn, setLogedIn] = useState<Boolean>(token ? true : false);
-  const [user, setUser] = useState("damn")
+  const [user, setUser] = useState("________")
   const [nowPlaying, setNowPlaying] = useState <NowPlaying>({
     name : "Not Checked",
     image: ""
