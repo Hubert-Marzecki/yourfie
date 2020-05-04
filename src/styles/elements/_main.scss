@@ -1,0 +1,73 @@
+@import "varibles";
+
+
+body{
+  background-color: #111;
+
+}
+.nav{
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%);
+  background-color: black;
+}
+.pick__category{
+  height: 100vh;
+  width: 100vw;
+  //background: url("https://picsum.photos/id/177/2515");
+  @include background-img-position;
+}
+
+.user__intro{
+  font-family: 'Mansalva', cursive;
+  font-size: 3em;
+
+  margin-left: 4vw;
+
+.intro__caption{
+  margin-top: -0.5em;
+  z-index: 100;
+}
+}
+.artist__info{
+  z-index: 100;
+}
+
+.card__container {
+
+
+  //&::-webkit-scrollbar {
+  //  height: 12px;
+  //}
+  //
+  //&::-webkit-scrollbar-track {
+  //  background: #f1f1f1;
+  //  border-radius: 5px;
+  //}
+  //&::-webkit-scrollbar-thumb {
+  //  background: #888;
+  //  border-radius: 5px;
+  //}
+  //
+  //&::-webkit-scrollbar-thumb:hover {
+  //  background: #555;
+  //}
+}
+
+.card {
+  min-width: 30vw;
+}
+.card__followers{
+  margin-top: -1em;
+}
+
+
+
+
+
+
+
+
+
+
+
