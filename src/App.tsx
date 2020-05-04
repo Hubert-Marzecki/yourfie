@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Spotify from "spotify-web-api-js"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 import "./styles/App.scss";
 import {
@@ -10,7 +16,10 @@ import {
 import userEvent from "@testing-library/user-event";
 import {CurrentPlaying} from "./components/CurrentPlaying";
 import {Login} from "./components/Login";
+import {Main} from "./components/Main";
 import {TopArtists} from "./components/TopArtists";
+import {TopTracks} from "./components/TopTracks";
+
 
 export interface NowPlaying {
   name: string,
@@ -58,12 +67,11 @@ function App() {
   function changePage() : JSX.Element{
   if(logedIn){
     getUser()
-    return (<TopArtists userName={user} />)
+    return (<TopTracks userName={user} />)
   } else {
     return <Login  />
   }
   }
-
 
   // function mainView(): JSX.Element {
   //   switch (currentPage.type) {
@@ -75,9 +83,30 @@ function App() {
   //       return <Board user={currentPage.user} />;
   //   }
   // }
+
+  function protectedRoutes(): JSX.Element[]{
+    if(logedIn){
+      getUser()
+      return [
+        <Route path="/board" component = {()=><Main userName={user}/>}></Route>
+      ]
+    }
+    return []
+  }
+
   return(
 <div>
   {changePage()}
+
+  {/*<Router>*/}
+  {/*  <div>*/}
+  {/*    <Route path="/" exact component={()=> <Main userName={user}/>} />*/}
+  {/*    <Route path="/login"  component={Login}/>*/}
+  {/*    {protectedRoutes()}*/}
+  {/*  </div>*/}
+
+  {/*</Router>*/}
+
 
       {/*<div className="background w-100">*/}
       {/*  <h1 className="text-5xl text-white tracking-wide text-center mt-10"> Find out what your soul jumps into </h1>*/}
