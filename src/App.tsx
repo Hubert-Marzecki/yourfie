@@ -1,20 +1,16 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import Spotify from "spotify-web-api-js"
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import React, { useState } from "react";
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link
+// } from "react-router-dom";
 
 import "./styles/App.scss";
 import {
   spotifyApi, token
 } from "./services/ApiClient";
 
-import userEvent from "@testing-library/user-event";
-import {CurrentPlaying} from "./components/CurrentPlaying";
 import {Login} from "./components/Login";
 import {Main} from "./components/Main";
 import {TopArtists} from "./components/TopArtists";
@@ -67,7 +63,7 @@ function App() {
   function changePage() : JSX.Element{
   if(logedIn){
     getUser()
-    return (<TopTracks userName={user} />)
+    return (<TopArtists userName={user} />)
   } else {
     return <Login  />
   }
@@ -84,15 +80,6 @@ function App() {
   //   }
   // }
 
-  function protectedRoutes(): JSX.Element[]{
-    if(logedIn){
-      getUser()
-      return [
-        <Route path="/board" component = {()=><Main userName={user}/>}></Route>
-      ]
-    }
-    return []
-  }
 
   return(
 <div>
