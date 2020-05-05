@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import facebookIcon from '../assets/facebook.svg'
 import instagramIcon from '../assets/instagram.svg'
 import twitter from '../assets/twitter.svg'
-import {spotifyApi, token} from "../services/ApiClient";
+import "../styles/elements/_login.scss";
 
 export const Login = (props: any) => {
 
