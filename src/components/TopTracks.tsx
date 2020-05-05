@@ -37,10 +37,10 @@ export const TopTracks = (props: {userName: string}) :JSX.Element => {
     },[]);
 
     async function updateTopTracks() {
-        let responseData  = await fetchTopArtistsLong();
+        let responseData  = await fetchTopTracks();
         setOffset(0)
         setTopTracks(responseData)
-        function fetchTopArtistsLong () {
+        function fetchTopTracks () {
             return spotifyApi.getMyTopTracks().then((response) => {
                 return response.items
             })
