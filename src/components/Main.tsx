@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {spotifyApi} from "../services/ApiClient";
-import axios, { AxiosResponse } from "axios";
+import "../styles/elements/_main.scss";
 
 
 
