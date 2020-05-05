@@ -1,9 +1,7 @@
 @import "varibles";
 
 .login{
-  height: 100vh;
-  width: 100vw;
-  background: url("https://picsum.photos/id/177/2515");
+
   @include background-img-position;
   //filter: hue-rotate(10deg) brightness(10%) grayscale(10%);
   z-index: 2;
@@ -28,6 +26,7 @@
 .login__footer__usage-counter{
   letter-spacing: 10px;
   font-size: 14px;
+ margin-top: 30em;
 
 }
 
@@ -55,7 +54,7 @@ img{
   left: 0;
   background: #000000;
   overflow: hidden;
-  opacity: 0.15;
+  opacity: 0.8;
   z-index: 1;
 }
 
@@ -66,7 +65,7 @@ img{
   backface-visibility: hidden;
   position: absolute;
   animation: move;
-  animation-duration: 33;
+  animation-duration: 93;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   z-index: 1;
