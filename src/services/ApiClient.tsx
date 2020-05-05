@@ -1,12 +1,12 @@
 
-import axios, { AxiosResponse } from "axios";
+// import axios, { AxiosResponse } from "axios";
 import Spotify from "spotify-web-api-js";
 
-export function getFromUrl<T>(url: string): Promise<T> {
-  return axios.get<T>(url).then((response: AxiosResponse<T>) => {
-    return response.data;
-  });
-}
+// export function getFromUrl<T>(url: string): Promise<T> {
+//   return axios.get<T>(url).then((response: AxiosResponse<T>) => {
+//     return response.data;
+//   });
+// }
 
 
 export const spotifyApi = new Spotify();
