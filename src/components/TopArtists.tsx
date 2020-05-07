@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {spotifyApi} from "../services/ApiClient";
 import "../styles/elements/_top-artists.scss";
+import {ArtistCard} from "./ArtistCard";
+import {Pagination} from "./Pagination";
 
 
 
@@ -27,10 +29,11 @@ import "../styles/elements/_top-artists.scss";
 
 
 export const TopArtists = (props: {userName: string}) :JSX.Element => {
-    const [topArtist, setTopArtist] = useState<Array<any>>([]);
+    const [topArtists, setTopArtists] = useState<Array<any>>([]);
     const [isFollowed, setIsFollowed] = useState <Array<boolean>>  ([true])
+    const [currentPage, setCurrentPage] = useState <number> (1)
     let [offset, setOffset] = useState<number>(1);
-    const LIMIT = 6;
+    const LIMIT = 5;
 
     useEffect(() => {
         updateTopArtistShort()
@@ -40,7 +43,7 @@ export const TopArtists = (props: {userName: string}) :JSX.Element => {
     async function updateTopArtistLong() {
         let responseData  = await fetchTopArtistsLong();
         setOffset(0)
-        setTopArtist(responseData)
+        setTopArtists(responseData)
 
     }
     function fetchTopArtistsLong () {
@@ -50,7 +53,7 @@ export const TopArtists = (props: {userName: string}) :JSX.Element => {
     }
     async function updateTopArtist() {
         let responseData = await fetchTopArtists();
-        setTopArtist(responseData)
+        setTopArtists(responseData)
         setOffset(0)
 
     }
@@ -61,7 +64,7 @@ export const TopArtists = (props: {userName: string}) :JSX.Element => {
     }
     async function updateTopArtistShort() {
         let responseData = await fetchTopArtistsShort();
-        setTopArtist(responseData)
+        setTopArtists(responseData)
         setOffset(0)
 
     }
@@ -107,14 +110,6 @@ export const TopArtists = (props: {userName: string}) :JSX.Element => {
     }
 
 
-    console.log(topArtist)
-
-
-const  displayIsFollowed = ():string[]=> {
-
-       return isFollowed?.map(item => item.toString())
-}
-
     function updateCardsShort() {
         updateTopArtistShort()
         getFollowShort()
@@ -128,7 +123,7 @@ const  displayIsFollowed = ():string[]=> {
         getFollowLong()
     }
     function nextPage() {
-        if(topArtist.length <= offset+LIMIT) {
+        if(topArtists.length <= offset+LIMIT) {
             return
         }
         window.scrollTo({ top: 20, behavior: 'smooth' });
@@ -145,47 +140,14 @@ const  displayIsFollowed = ():string[]=> {
     }
 
 
-    function artistCards () {
-        //Nie tu
-        return (
-            <div className="card__container flex flex-wrap  sm:flex-wrap sm:justify-center ">
-                {topArtist.slice(offset,offset+LIMIT).map((item, index)=> {
-                    return (
 
-                        <div
-                            key={index}
-                            className="card rounded  sm:w-1/4 md:w-1/4  shadow-lg m-2 bg-white ">
-                            <img className="card__image " src={item.images[0].url} alt="Sunset in the mountains"/>
-                            <div className="px-6 py-4">
-                                <div className="font-bold text-xl mb-2">  {index+1+"."} {item.name} </div>
-                                <div className="card__followers font-bold  text-sm sm:text-base mt-5">Followed by: <span className="font-hairline"> {item.followers.total} people </span></div>
-                                <div className="card__popularity font-bold text-sm sm:text-base"> Popularity: <span className="font-hairline">{item.popularity} / 100 </span></div>
+    const indexOfLastCard = currentPage * LIMIT
+    const indexOfFitstCard = indexOfLastCard - LIMIT
 
-                                <div className="flex flex-wrap mt-10">
-                                <p className="text-base ">
-                                    <a href={item.external_urls.spotify}> <button className=" text-center bg-purple-700 rounded px-5 py-2 text-sm mt-1 font-semibold text-white mr-2"> See at Spotify </button></a>
-                                </p>
-                                <p className="text-base ">
-                                    {displayIsFollowed()?.[index] === "true" ? <button className="text-center  rounded px-5 py-2 bg-purple-300 text-sm mt-1 font-semibold text-white mr-2"> Followed </button> :<button className="text-center bg-green-500 rounded px-5 py-2 text-sm mt-1 font-semibold text-white mr-2"> Follow!  </button> }
-                                </p>
-                            </div>
+    const currentCards = topArtists.slice(indexOfFitstCard, indexOfLastCard)
+    const currentCardFollow = isFollowed.slice(indexOfFitstCard,indexOfLastCard)
+    const paginate = (pageNumber:number) => setCurrentPage(pageNumber)
 
-                            </div>
-                            <div className="px-6 py-4">
-                                {item.genres[0] ? <span
-                                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm mt-1 font-semibold text-gray-700 mr-2">{item.genres[0] ?  item.genres[0] : null} </span> : null}
-
-                                {item.genres[1] ? <span
-                                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm mt-1 font-semibold text-gray-700 mr-2">{item.genres[1] ?  item.genres[1] : null} </span> : null}
-                                {item.genres[2] ? <span
-                                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm mt-1 font-semibold text-gray-700 mr-2">{item.genres[2] ?  item.genres[2] : null} </span> : null}
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
-        )
-    }
 
     return(
 <div className="top__artists">
@@ -203,7 +165,7 @@ const  displayIsFollowed = ():string[]=> {
 
         </div>
     </nav>
-    <div className="text-center text-xl font-black text-white pt-20"> YOUR TOP {topArtist.length} ARTIST </div>
+    <div className="text-center text-xl font-black text-white pt-20"> YOUR TOP {topArtists.length} ARTIST </div>
     <div className="text-center text-xl font-hairline text-white"> Display data from time period </div>
     <div className="mb-5 text-center">
         <div className="inline-flex">
@@ -224,23 +186,10 @@ const  displayIsFollowed = ():string[]=> {
             </button>
         </div>
     </div>
-            {artistCards()}
 
-            <div className="flex justify-center mt-5 mb-5">
-                <button
-                    className= {offset === 0 ? "text-white fill-current  mr-1 px-2 py-1" :"text-white border font-bold fill-current  mr-1 px-2 py-1"}
-                    onClick={() => previousPage()}
-                >
-                    {offset === 0 ? "Click ----> " : "Move Back" }
-                </button>
-                <button
-                    className={offset+LIMIT> topArtist.length ? "text-white fill-current  mr-1 px-2 py-1 " : "text-white font-bold border fill-current  ml-1 px-2 py-1"}
-                    onClick={() => nextPage() }
-                >
-                    {offset+LIMIT< topArtist.length ? "See More" : "Chceck other list!" }
-                </button>
 
-            </div>
+    <ArtistCard topArtistsCurrent={currentCards} isFollowed={currentCardFollow} />
+    <Pagination cardsPerPage={LIMIT} totalCards={topArtists.length} paginate={paginate} />
 
 
 

@@ -11,7 +11,7 @@
 .login__text{
   font-family: 'Mansalva', cursive;
   font-size: 8em;
-
+z-index: 2;
 }
 .login__auth{
   z-index: 2;
@@ -22,22 +22,19 @@
   background-color: white;
   z-index: 2;
 }
-
+.login__cta{
+  z-index: 2;
+}
 .login__footer__usage-counter{
   letter-spacing: 10px;
   font-size: 14px;
  margin-top: 30em;
-
+z-index: 2;
 }
 
 .login__footer__social-icons {
   z-index: 2;
 
-img{
-  width: 30px !important;
-  z-index: 3;
-  cursor: pointer;
-}
 }
 
 @keyframes move {
