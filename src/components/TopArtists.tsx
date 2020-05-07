@@ -31,15 +31,15 @@ import {Pagination} from "./Pagination";
 export const TopArtists = (props: {userName: string}) :JSX.Element => {
     const [topArtists, setTopArtists] = useState<Array<any>>([]);
     const [isFollowed, setIsFollowed] = useState <Array<boolean>>  ([true])
-    const [currentPage, setCurrentPage] = useState <number> (1)
-    let [offset, setOffset] = useState<number>(1);
-    const LIMIT = 5;
+    let [offset, setOffset] = useState<number>(0);
+    const LIMIT = 6;
 
     useEffect(() => {
         updateTopArtistShort()
         getFollowShort()
     },[]);
 
+    // zmienić nazwę na update
     async function updateTopArtistLong() {
         let responseData  = await fetchTopArtistsLong();
         setOffset(0)
@@ -122,7 +122,8 @@ export const TopArtists = (props: {userName: string}) :JSX.Element => {
         updateTopArtistLong()
         getFollowLong()
     }
-    function nextPage() {
+
+    const nextPage = () => {
         if(topArtists.length <= offset+LIMIT) {
             return
         }
@@ -130,7 +131,7 @@ export const TopArtists = (props: {userName: string}) :JSX.Element => {
         const newOffset = offset+LIMIT;
         setOffset(newOffset)
     }
-    function previousPage() {
+    const previousPage = () => {
         if (offset-LIMIT < 0) {
             return
         }
@@ -140,17 +141,8 @@ export const TopArtists = (props: {userName: string}) :JSX.Element => {
     }
 
 
-
-    const indexOfLastCard = currentPage * LIMIT
-    const indexOfFitstCard = indexOfLastCard - LIMIT
-
-    const currentCards = topArtists.slice(indexOfFitstCard, indexOfLastCard)
-    const currentCardFollow = isFollowed.slice(indexOfFitstCard,indexOfLastCard)
-    const paginate = (pageNumber:number) => setCurrentPage(pageNumber)
-
-
     return(
-<div className="top__artists">
+    <div className="top__artists">
     <nav className=" px-8 pt-2 shadow-md bg-black fixed nav">
         <div className="-mb-px flex justify-center ">
             <a className="text-white no-underline text-teal-dark border-b-2 border-teal-dark uppercase tracking-wide font-bold text-xs py-3 mr-8"
@@ -188,12 +180,13 @@ export const TopArtists = (props: {userName: string}) :JSX.Element => {
     </div>
 
 
-    <ArtistCard topArtistsCurrent={currentCards} isFollowed={currentCardFollow} />
-    <Pagination cardsPerPage={LIMIT} totalCards={topArtists.length} paginate={paginate} />
-
-
-
-
+    <ArtistCard
+        topArtists={topArtists}
+        // setIsFollowed={setIsFollowed}
+        isFollowed={isFollowed}
+        offset={offset}
+        limit={LIMIT}/>
+    <Pagination  nextPage={nextPage} previousPage={previousPage}/>
 
         </div>
     )
