@@ -63,7 +63,7 @@ function App() {
   function changePage() : JSX.Element{
   if(logedIn){
     getUser()
-    return (<TopArtists userName={user} />)
+    return (<TopArtists />)
   } else {
     return <Login  />
   }
