@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, Dispatch, SetStateAction} from "react";
 import {spotifyApi} from "../services/ApiClient";
 
-export const ArtistCard = (props: {topArtists: any[], isFollowed : boolean[], offset: number, limit: number}) => {
+export const ArtistCard = (props: {topArtists: any[], isFollowed : boolean[], offset: number, limit: number, setIsFollowed : Dispatch<SetStateAction<boolean[]>> }) => {
 
-    const  displayIsFollowed = ():string[]=> {
-        return props.isFollowed?.map(item => item.toString())
-    }
+    function updateFollowed(index:number, id:string) {
+        let newState = [];
+        newState[index] = !props.isFollowed[index];
+        props.setIsFollowed({...props.isFollowed, ...newState});
+        console.log(props.isFollowed[index])
 
-    function followArtist(x:string) {
-    spotifyApi.followArtists([x]).then(response => {
-        return response
-    })
-}
-    function unfollowArtist(x:string) {
-        spotifyApi.unfollowArtists([x]).then(response => {
+        if(props.isFollowed[index]) {
+            return spotifyApi.unfollowArtists([id]).then(response => {
+                return response
+            })
+        }  return spotifyApi.followArtists([id]).then(response => {
             return response
         })
-
     }
+
+
+
 
     // dodać props zmienić typ seIsFollowed
     // follow - przyjmuje id, które następnie będzie zmieniało 1. konkretny kontener
@@ -35,19 +37,18 @@ export const ArtistCard = (props: {topArtists: any[], isFollowed : boolean[], of
                             <div className="font-bold text-xl mb-2">  {index +1+"."} {item.name} </div>
                             <div className="card__followers font-bold  text-sm sm:text-base mt-5">Followed by: <span className="font-hairline"> {item.followers.total} people </span></div>
                             <div className="card__popularity font-bold text-sm sm:text-base"> Popularity: <span className="font-hairline">{item.popularity} / 100 </span></div>
-                            <div className="card__popularity font-bold text-sm sm:text-base"> Popularity: <span className="font-hairline"> {item.id}  </span></div>
 
                             <div className="flex flex-wrap mt-10">
                                 <p className="text-base ">
                                     <a href={item.external_urls.spotify}> <button className=" text-center bg-purple-700 rounded px-5 py-2 text-sm mt-1 font-semibold text-white mr-2"> See at Spotify </button></a>
                                 </p>
                                 <p className="text-base ">
-                                    {displayIsFollowed()?.[index] === "true" ? <button
+                                    {props.isFollowed[index] ? <button
                                         className="text-center  rounded px-5 py-2 bg-purple-300 text-sm mt-1 font-semibold text-white mr-2"
-                                        onClick={() => unfollowArtist(item.id)}
+                                        onClick={() => {updateFollowed(index, item.id)}}
                                     > Followed </button> :<button
                                         className="text-center bg-green-500 rounded px-5 py-2 text-sm mt-1 font-semibold text-white mr-2"
-                                        onClick={() => followArtist(item.id)}
+                                        onClick={() => {updateFollowed(index, item.id)}}
                                     > Follow!  </button> }
                                 </p>
                             </div>

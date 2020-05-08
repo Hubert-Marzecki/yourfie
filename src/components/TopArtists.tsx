@@ -182,7 +182,7 @@ export const TopArtists = (props: {userName: string}) :JSX.Element => {
 
     <ArtistCard
         topArtists={topArtists}
-        // setIsFollowed={setIsFollowed}
+        setIsFollowed={setIsFollowed}
         isFollowed={isFollowed}
         offset={offset}
         limit={LIMIT}/>
