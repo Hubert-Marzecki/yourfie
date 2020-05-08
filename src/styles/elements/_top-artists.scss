@@ -2,10 +2,9 @@
   z-index: 100000;
 }
 
-.card__container {
-  z-index: 100;
+html {
   &::-webkit-scrollbar {
-    height: 12px;
+    width: 10px;
   }
 
   &::-webkit-scrollbar-track {
@@ -13,23 +12,34 @@
     border-radius: 5px;
   }
   &::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #111;
     border-radius: 5px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #111;
   }
 }
+.card__info{
+  -webkit-box-shadow: 0px 31px 42px -34px rgba(204,79,204,0.4);
+  -moz-box-shadow: 0px 31px 42px -34px rgba(204,79,204,0.4);
+  box-shadow: 0px 31px 42px -34px rgba(204,79,204,0.4);
+}
+
 .card__followers{
   margin-top: -0.5em;
 }
-@keyframes move {
-  100% {
-    transform: translate3d(0, 0, 1px) rotate(360deg);
-  }
+
+.card__follow{
+  -webkit-filter: invert(100%);
+  height: 1.5em;
 }
-.card__image{
-  width: 100%;
+.card__follow--do-follow{
+  -webkit-filter: invert(50%);
+  height: 1.5em;
+
+  &:hover{
+    fill: #3452cb;
+  }
 }
 
