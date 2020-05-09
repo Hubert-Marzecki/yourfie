@@ -60,6 +60,7 @@ export  function fetchFollowedArtistsLong(artistId : string[]) {
   })
 }
 
+
 // push follow / unfollow actions
 export function pushFollowArtist(id: string) {
   return spotifyApi.followArtists([id]).then(response => {
@@ -68,6 +69,12 @@ export function pushFollowArtist(id: string) {
 }
 export  function pushUnfollowArtist(id:string) {
   return spotifyApi.unfollowArtists([id]).then(response => {
+    return response
+  })
+}
+
+export function fetchArtistAlums(id: string) {
+  return spotifyApi.getArtistAlbums(id).then(response => {
     return response
   })
 }

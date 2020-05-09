@@ -31,7 +31,7 @@ function App() {
     name : "Not Checked",
     image: ""
   })
-  const [currentPage, setCurrentPage] = useState({type: "LOGIN"})
+
 
   function getNowPlaying() {
   spotifyApi.getMyCurrentPlaybackState().then((response) => {
@@ -55,11 +55,6 @@ function App() {
     })
   }
 
-
-
-  // getUser()
-  // getTopArtist()
-
   function changePage() : JSX.Element{
   if(logedIn){
     getUser()
@@ -69,73 +64,12 @@ function App() {
   }
   }
 
-  // function mainView(): JSX.Element {
-  //   switch (currentPage.type) {
-  //     case "LOGIN":
-  //       return <Login changePage={setCurrentPage} />;
-  //     case "REGISTER":
-  //       return <Register changePage={setCurrentPage} />;
-  //     case "BOARDS":
-  //       return <Board user={currentPage.user} />;
-  //   }
-  // }
-
 
   return(
 <div>
   {changePage()}
 
-  {/*<Router>*/}
-  {/*  <div>*/}
-  {/*    <Route path="/" exact component={()=> <Main userName={user}/>} />*/}
-  {/*    <Route path="/login"  component={Login}/>*/}
-  {/*    {protectedRoutes()}*/}
-  {/*  </div>*/}
 
-  {/*</Router>*/}
-
-
-      {/*<div className="background w-100">*/}
-      {/*  <h1 className="text-5xl text-white tracking-wide text-center mt-10"> Find out what your soul jumps into </h1>*/}
-      {/*  <a href="http://localhost:8888">*/}
-      {/*    <button*/}
-      {/*        className={ logedIn ? "opacity-0" : "log-in bg-transparent hover:bg-blue-500 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}*/}
-      {/*  >*/}
-      {/*      Get your spotify data*/}
-      {/*    </button>*/}
-      {/*  </a>*/}
-
-      {/*    <h3 className="text-white text-center font-black"> Hello {userInfo.name} </h3>*/}
-
-      {/*    <CurrentPlaying*/}
-      {/*        getNowPlaying={getNowPlaying}*/}
-      {/*        nowPlayingName={nowPlaying.name}*/}
-      {/*        nowPlayingImage={nowPlaying.image}*/}
-      {/*    />*/}
-
-
-
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*  <span></span>*/}
-      {/*</div>*/}
 </div>
   );
 }
