@@ -26,8 +26,24 @@ export const TopTracks = () :JSX.Element => {
     console.log(topTracks)
 
     return(
-   <div>
+   <div className="tracks__card__container flex flex-col  justify-center ml-auto mr-auto">
+       {topTracks.map((item , index)=> {
+           return (
 
+               <div
+
+                   key={index}
+                   className="card rounded  mt-5 flex ">
+                   <img className="card__image " src={item.album.images[0].url} alt="Sunset in the mountains"/>
+                  
+
+
+
+               </div>
+
+
+           )
+       })}
    </div>
     )
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+    fetchArtistAlums,
     fetchFollowedArtists, fetchFollowedArtistsLong,
     fetchFollowedArtistsShort,
     fetchTopArtists,
@@ -16,6 +17,8 @@ import {Navigation} from "./Navigation";
 export const TopArtists = () :JSX.Element => {
     const [topArtists, setTopArtists] = useState<Array<any>>([]);
     const [isFollowed, setIsFollowed] = useState <Array<boolean>>  ([true])
+    const [artistAlbums, setArtistAlbums] = useState<any>([])
+
     let [offset, setOffset] = useState<number>(0);
     const LIMIT = 6;
 
@@ -96,6 +99,13 @@ export const TopArtists = () :JSX.Element => {
         setOffset(newOffset)
     }
 
+    //load artist albums
+    async function loadArtistAlbums(id:string) {
+        let responseData = await fetchArtistAlums(id);
+        setArtistAlbums(responseData)
+    }
+
+    console.log(artistAlbums)
     return(
     <div className="top__artists">
         <Navigation />
@@ -128,6 +138,8 @@ export const TopArtists = () :JSX.Element => {
         isFollowed={isFollowed}
         offset={offset}
         limit={LIMIT}
+        setArtistAlbums={setArtistAlbums}
+        loadArtistAlbums={loadArtistAlbums}
     />
     <Pagination
         nextPage={nextPage}
