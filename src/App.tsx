@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link
-// } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 import "./styles/App.scss";
 import {
@@ -15,6 +15,8 @@ import {Login} from "./components/Login";
 import {Main} from "./components/Main";
 import {TopArtists} from "./components/TopArtists";
 import {TopTracks} from "./components/TopTracks";
+import {ArtistAlbums} from "./components/ArtistAblums";
+import {Simulate} from "react-dom/test-utils";
 
 
 export interface NowPlaying {
@@ -57,7 +59,6 @@ function App() {
 
   function changePage() : JSX.Element{
   if(logedIn){
-    getUser()
     return (<TopArtists />)
   } else {
     return <Login  />
@@ -66,11 +67,14 @@ function App() {
 
 
   return(
+      <Router>
+
 <div>
   {changePage()}
 
 
 </div>
+      </Router>
   );
 }
 
