@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
-    fetchArtistAlums,
-    fetchFollowedArtists, fetchFollowedArtistsLong,
+    fetchArtistAlbums,
+    fetchFollowedArtists,
+    fetchFollowedArtistsLong,
     fetchFollowedArtistsShort,
     fetchTopArtists,
     fetchTopArtistsLong,
@@ -12,12 +13,17 @@ import "../styles/elements/_top-artists.scss";
 import {ArtistCard} from "./ArtistCard";
 import {Pagination} from "./Pagination";
 import {Navigation} from "./Navigation";
+import {ArtistAlbums} from "./ArtistAblums";
+import {CardsUpdate} from "./CardsUpdate";
 
 
 export const TopArtists = () :JSX.Element => {
     const [topArtists, setTopArtists] = useState<Array<any>>([]);
     const [isFollowed, setIsFollowed] = useState <Array<boolean>>  ([true])
-    const [artistAlbums, setArtistAlbums] = useState<any>([])
+    const [artistAlbums, setArtistAlbums] = useState<any>()
+    const [artistSingles, setArtistSingles] = useState<any>()
+    const [artistAppears, setArtistAppears] = useState<any>()
+    const [artistCompilation, setArtistCompilation] = useState<any>()
 
     let [offset, setOffset] = useState<number>(0);
     const LIMIT = 6;
@@ -101,50 +107,65 @@ export const TopArtists = () :JSX.Element => {
 
     //load artist albums
     async function loadArtistAlbums(id:string) {
-        let responseData = await fetchArtistAlums(id);
+        let responseData = await fetchArtistAlbums(id);
         setArtistAlbums(responseData)
+        console.log(artistAlbums)
+
     }
 
-    console.log(artistAlbums)
+    //load artist singles
+    //load artist appears
+    //load artist compilation
+    // todo fetch artist albums, appears, compilation in single function
+
+
+    function displayArtistAlbums () {
+        if (artistAlbums) {
+            console.log(artistAlbums)
+            return <ArtistAlbums
+                artistAlbums={artistAlbums}
+
+            />
+
+        } return   [ <CardsUpdate
+            updateCardsShort={updateCardsShort}
+            updateCards={updateCards}
+            updateCardsLong={updateCardsLong}
+            topArtists={topArtists}
+        />, <ArtistCard
+            topArtists={topArtists}
+            setIsFollowed={setIsFollowed}
+            isFollowed={isFollowed}
+            offset={offset}
+            limit={LIMIT}
+            setArtistAlbums={setArtistAlbums}
+            loadArtistAlbums={loadArtistAlbums}
+        />,
+        <Pagination
+            nextPage={nextPage}
+            previousPage={previousPage}
+        />,
+        ]
+
+    }
+
+
     return(
     <div className="top__artists">
         <Navigation />
-    <div className="text-center text-5xl font-black text-white pt-20 mb-10"> YOUR TOP {topArtists.length} ARTIST </div>
-    <div className="text-center text-xl font-hairline text-base text-white"> Display data from time period </div>
-    <div className=" text-center">
-        <div className="inline-flex mt-1">
-            <button
-                onClick={() =>updateCardsShort() }
-                className="bg-purple-400 hover:bg-purple-800 text-white font-bold rounded-l  py-1 px-2 m-1">
-                4 weeks
-            </button>
-            <button
-                onClick={() =>updateCards()}
-                className="bg-purple-500 hover:bg-purple-800 text-white font-bold py-1 px-2 m-1">
-               6 months
-            </button>
-            <button
-                onClick={() => updateCardsLong()}
-                className="bg-purple-600 hover:bg-purple-800 text-white font-bold py-1 px-2 rounded-r m-1">
-               Beggining!
-            </button>
-        </div>
-    </div>
 
 
-    <ArtistCard
-        topArtists={topArtists}
-        setIsFollowed={setIsFollowed}
-        isFollowed={isFollowed}
-        offset={offset}
-        limit={LIMIT}
-        setArtistAlbums={setArtistAlbums}
-        loadArtistAlbums={loadArtistAlbums}
-    />
-    <Pagination
-        nextPage={nextPage}
-        previousPage={previousPage}
-    />
+        {displayArtistAlbums()}
+    {/*<ArtistCard*/}
+    {/*    topArtists={topArtists}*/}
+    {/*    setIsFollowed={setIsFollowed}*/}
+    {/*    isFollowed={isFollowed}*/}
+    {/*    offset={offset}*/}
+    {/*    limit={LIMIT}*/}
+    {/*    setArtistAlbums={setArtistAlbums}*/}
+    {/*    loadArtistAlbums={loadArtistAlbums}*/}
+    {/*/>*/}
+
 
 
 
