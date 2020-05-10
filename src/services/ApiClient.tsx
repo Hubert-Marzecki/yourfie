@@ -73,8 +73,10 @@ export  function pushUnfollowArtist(id:string) {
   })
 }
 
-export function fetchArtistAlums(id: string) {
+// get artist albums
+export function fetchArtistAlbums(id: string) {
   return spotifyApi.getArtistAlbums(id).then(response => {
     return response
   })
 }
+//todo add - get artist: albums, singles, appears, compilation
