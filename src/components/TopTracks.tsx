@@ -35,8 +35,6 @@ export const TopTracks = () :JSX.Element => {
                    key={index}
                    className="card rounded  mt-5 flex ">
                    <img className="card__image " src={item.album.images[0].url} alt="Sunset in the mountains"/>
-                  
-
 
 
                </div>

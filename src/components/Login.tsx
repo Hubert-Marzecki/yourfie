@@ -14,9 +14,11 @@ export const Login = (props: any) => {
                 <h2 className="login__cta font-sans text-center font-heavy text-white text-6xl mt-20 ">Login to Spotify</h2>
             </div>
             <div className="login__main flex flex-col content-center">
+
                 <a
 
                     href="http://localhost:8888" className="login__auth self-center">
+
                 <button
                     className="login__button px-16 mt-10 self-center py-3 font-bold py-2 px-4 rounded-full">
                       LOGIN
@@ -37,58 +39,7 @@ export const Login = (props: any) => {
 
 
 
-            <div className="background">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+
 
         </div>
     )
