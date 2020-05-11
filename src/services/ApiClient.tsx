@@ -26,6 +26,12 @@ if (token) {
   spotifyApi.setAccessToken(token);
 }
 
+export function fetchArtist(id:string) {
+  return spotifyApi.getArtist(id).then (response => {
+    return response
+  })
+}
+
 // fetch top artist from 4weeks/6msc/beginning
 export function fetchTopArtistsLong () {
   return spotifyApi.getMyTopArtistsLong().then((response) => {
@@ -79,4 +85,18 @@ export function fetchArtistAlbums(id: string) {
     return response
   })
 }
-//todo add - get artist: albums, singles, appears, compilation
+export function fetchArtistSingles(id: string) {
+  return spotifyApi.getArtistSingles(id).then(response => {
+    return response
+  })
+}
+export function fetchArtistAppears(id: string) {
+  return spotifyApi.getArtistAppears(id).then(response => {
+    return response
+  })
+}
+export function fetchArtistCompilations(id: string) {
+  return spotifyApi.getArtistCompilations(id).then(response => {
+    return response
+  })
+}

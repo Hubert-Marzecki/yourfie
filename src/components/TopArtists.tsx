@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
-    fetchArtistAlbums,
+    fetchArtist,
+    fetchArtistAlbums, fetchArtistAppears, fetchArtistCompilations, fetchArtistSingles,
     fetchFollowedArtists,
     fetchFollowedArtistsLong,
     fetchFollowedArtistsShort,
@@ -13,7 +14,7 @@ import "../styles/elements/_top-artists.scss";
 import {ArtistCard} from "./ArtistCard";
 import {Pagination} from "./Pagination";
 import {Navigation} from "./Navigation";
-import {ArtistAlbums} from "./ArtistAblums";
+import {ArtistDiscography} from "./ArtistDiscography";
 import {CardsUpdate} from "./CardsUpdate";
 
 
@@ -23,7 +24,8 @@ export const TopArtists = () :JSX.Element => {
     const [artistAlbums, setArtistAlbums] = useState<any>()
     const [artistSingles, setArtistSingles] = useState<any>()
     const [artistAppears, setArtistAppears] = useState<any>()
-    const [artistCompilation, setArtistCompilation] = useState<any>()
+    const [artistCompilations, setArtistCompilations] = useState<any>()
+    const [displayedArtist, setDisplayedArtist] = useState<any>([])
 
     let [offset, setOffset] = useState<number>(0);
     const LIMIT = 6;
@@ -106,25 +108,35 @@ export const TopArtists = () :JSX.Element => {
     }
 
     //load artist albums
+    async function loadArtist(id:string){
+        let responseData = await fetchArtist(id)
+        setDisplayedArtist(responseData)
+    }
     async function loadArtistAlbums(id:string) {
         let responseData = await fetchArtistAlbums(id);
         setArtistAlbums(responseData)
-        console.log(artistAlbums)
-
     }
-
-    //load artist singles
-    //load artist appears
-    //load artist compilation
-    // todo fetch artist albums, appears, compilation in single function
+    async function loadArtistSingles(id:string) {
+        let responseData = await fetchArtistSingles(id);
+        setArtistSingles(responseData)
+    }
+    async function loadArtistAppears(id:string) {
+        let responseData = await fetchArtistAppears(id);
+        setArtistAppears(responseData)
+    }
+    async function loadArtistCompilations(id:string) {
+        let responseData = await fetchArtistCompilations(id);
+        setArtistCompilations(responseData)
+    }
 
 
     function displayArtistAlbums () {
-        if (artistAlbums) {
-            console.log(artistAlbums)
-            return <ArtistAlbums
+        if ( artistAlbums && artistSingles ) {
+            return <ArtistDiscography
                 artistAlbums={artistAlbums}
-
+                artistSingles={artistSingles}
+                displayedArtist={displayedArtist}
+                setArtistAlbums={setArtistAlbums}
             />
 
         } return   [ <CardsUpdate
@@ -140,6 +152,10 @@ export const TopArtists = () :JSX.Element => {
             limit={LIMIT}
             setArtistAlbums={setArtistAlbums}
             loadArtistAlbums={loadArtistAlbums}
+            loadArtistSingles={loadArtistSingles}
+            loadArtistAppears={loadArtistAppears}
+            loadArtistCompilations={loadArtistCompilations}
+            loadArtist={loadArtist}
         />,
         <Pagination
             nextPage={nextPage}

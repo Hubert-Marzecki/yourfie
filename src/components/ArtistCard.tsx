@@ -1,6 +1,8 @@
 import React, {useState, useEffect, Dispatch, SetStateAction} from "react";
 import {pushFollowArtist, pushUnfollowArtist, spotifyApi} from "../services/ApiClient";
 import hearth from "../assets/kz-heart.svg"
+import hearthTwo from "../assets/love-and-romance (1).png"
+import hearthFull from "../assets/love-and-romance.png"
 import "../styles/elements/_top-artists.scss";
 import {Link} from 'react-router-dom'
 
@@ -13,7 +15,10 @@ export const ArtistCard = (
             setIsFollowed : Dispatch<SetStateAction<boolean[]>>,
             setArtistAlbums : Dispatch<SetStateAction<any>>,
             loadArtistAlbums: (id:string) => void;
-
+            loadArtistSingles: (id: string) => void;
+            loadArtistAppears: (id: string) => void
+            loadArtistCompilations: (id: string) => void
+            loadArtist: (id:string) => void
         }) => {
 
 
@@ -31,36 +36,48 @@ export const ArtistCard = (
 
     return (
         <div className="card__container flex flex-wrap  sm:flex-wrap sm:justify-center ">
-            {props.topArtists.slice(props.offset, props.offset + props.limit).map((item, index)=> {
+            {props.topArtists.slice(props.offset, props.offset + props.limit).map((item, index) => {
 
                 return (
                     <div
                         key={index}
                         className="card rounded  text-white  md:w-1/3 xl:w-1/4   m-5  "
-                        onClick={() => {props.loadArtistAlbums(item.id);}}
                     >
+                        <img className="card__image" src={item.images[0].url} alt="Sunset in the mountains"
+                             onClick={() => {props.loadArtistAlbums(item.id);}}/>
+                        <div className="px-6 py-4 card__info">
+                            {/*{props.isFollowed[index + props.offset] ?*/}
+                            {/*    <img src={hearthTwo} className="card__follow absolute l-30 "*/}
+                            {/*         onClick={() => {updateFollowed(index + props.offset, item.id)}}*/}
+                            {/*    />*/}
+                            {/*    : <img src={hearthFull} className="card__follow unfollow absolute l-30"*/}
+                            {/*         onClick={() => {updateFollowed(index + props.offset, item.id)}} />*/}
+                            {/*}*/}
 
-                        <img className="card__image " src={item.images[0].url} alt="Sunset in the mountains"/>
-                        <div className="px-6 py-4 card__info z-0 ">
-                            {/*<div className="w-1/6"><img src={hearth} className="card__follow absolute l-30"/></div>*/}
                             <div className="font-bold text-2xl mb-2">  {index + props.offset +1+"."} {item.name} </div>
                             <div className="card__followers font-bold  text-sm sm:text-base mt-5">Followers:  <span className="font-hairline"> {item.followers.total}</span></div>
                             <div className="card__popularity font-bold text-sm sm:text-base"> Popularity: <span className="font-hairline">{item.popularity} / 100 </span></div>
-                            <div className="card__popularity font-bold text-sm sm:text-base"> Id <span className="font-hairline">{item.id}  </span></div>
 
-                            <div className="card__buttons   flex flex-wrap mt-10 justify-between">
+                            <div className="card__buttons flex flex-wrap mt-10 justify-between">
                                     <a href={item.external_urls.spotify}> <button className=" text-center bg-purple-700 rounded px-5 py-2 text-sm  font-semibold text-white "> See at Spotify </button></a>
                                     {props.isFollowed[index + props.offset] ?
                                         <button
                                             className="text-center bg-green-500 rounded px-5 py-2 text-sm  font-semibold text-white "
                                         onClick={() => {updateFollowed(index + props.offset, item.id)}}
                                     > Follow
-                                        </button> :
-
+                                        </button>
+                                        :
                                         <button
                                         className="text-center bg-green-900 rounded px-5 py-2 text-sm  font-semibold text-white "
                                         onClick={() => {updateFollowed(index + props.offset, item.id)}}
                                     > Unfollow </button> }
+                                    <button className="button__discography "
+                                            onClick={() => {
+                                                props.loadArtistAlbums(item.id);
+                                                props.loadArtistSingles(item.id)
+                                                props.loadArtist(item.id)
+                                            }}
+                                    > SEE DISCOGRAPHY </button>
 
                             </div>
                             <div className="flex justify-center mt-10">
