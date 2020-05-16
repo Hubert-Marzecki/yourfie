@@ -20,5 +20,5 @@ Project is created with:
 Project need separated Node server with at this moment is not available. I encourage you to see code.
 
 ## Next Step
-During development, I decided it is a good time to use Redux in this application. It will allow me to practice it more and I think this will help manage all features that the application may provide. 
-The first draft will be soon available at another repository :) 
+During development, I decided that redux may come in handy. I think this will help manage all features that the application may provide. 
+The first draft will be soon available at another repository.
